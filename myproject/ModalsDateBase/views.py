@@ -1,18 +1,24 @@
 from typing import Any
 from django.db.models.query import QuerySet
 from django.shortcuts import render
-from django.views.generic import ListView,DetailView, UpdateView, DeleteView
+from celery import shared_task
+from django.views.generic import ListView,DetailView, UpdateView, DeleteView, View
 from .models import Post, Author, Subscription
 from datetime import datetime
+from django.core.mail import send_mail,mail_admins
 from django.http import HttpResponse, HttpResponseRedirect
 from .filters import *
 from .forms import CreatePost, PostFormFilter, UpdatePost
 from django import forms
+from django.http import request
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin , PermissionRequiredMixin
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.views.decorators.csrf import csrf_protect
 from django.db.models import Exists, OuterRef
+from myproject.tasks import send_messege_subscribers
+
+
 
 
 class News_list(ListView):
@@ -116,6 +122,7 @@ def create_post(request):
             post = form.save(commit=False)
             post.author = author
             post.save()
+            send_messege_subscribers(post)
             return HttpResponseRedirect('/news/')
     else:
         form = CreatePost()
@@ -159,3 +166,26 @@ def subscriptions(request):
         'subscriptions.html',
         {'categories': categories_with_subscriptions},
     )
+    
+
+# def save():
+#     author = Author.objects.create(user=request)
+#     author.save()
+        
+#     send_mail (
+#         subject='Thanks for singup',
+#         message=f'Succes singup to user {author.username}',
+#         recipient_list=[author.email],
+#         from_email=None,
+#     )
+        
+#     mail_admins(
+#         subject='New User',
+#         message=f'User {author.username} singup'
+#     )
+#     return render(
+#         request,
+#         'makeAuthor',
+#         {'You Author': author},
+#     )
+    

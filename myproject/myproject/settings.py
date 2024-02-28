@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django_apscheduler',
     'allauth',
+    'celery',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
@@ -136,3 +137,9 @@ EMAIL_SUBJECT_PREFIX = ' '
 ADMINS = [(
     'Arsen', 'stalker.lager@gmail.com'
 )]
+
+CELERY_BROKER_URL = 'redis://default:sxXTD6OYPWTvdy4h8y6WiqTtjQy1F2sE@redis-11021.c302.asia-northeast1-1.gce.cloud.redislabs.com:11021'
+CELERY_RESULT_BACKEND = 'redis://default:sxXTD6OYPWTvdy4h8y6WiqTtjQy1F2sE@redis-11021.c302.asia-northeast1-1.gce.cloud.redislabs.com:11021'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'

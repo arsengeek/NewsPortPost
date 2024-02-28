@@ -1,0 +1,11 @@
+# from django.dispatch import receiver
+# from django.db.models.signals import post_save
+# from ModalsDateBase.models import Post, User
+# from django.core.mail import EmailMultiAlternatives
+# from .tasks import send_email_to_subscribers  
+
+
+# @receiver(post_save, sender=Post)
+# def subscriptions_post_created(sender, instance, created, **kwargs):
+#     if not created:
+#         send_email_to_subscribers.delay(instance.id)

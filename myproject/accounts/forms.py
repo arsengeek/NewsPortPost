@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.mail import send_mail,mail_admins
 from ModalsDateBase.models import Author
         
-class Signup(SignupForm):
+class SignIn(SignupForm):
     def save(self, request):
         author = Author.objects.create(user=request.user)
         author.save()

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load custom_filter%}
     <body>
         <h1> Wellcome back {{request.user}}</h>
         {%if perms.ModalsDateBase.add_post%}
@@ -7,14 +8,14 @@
         {%endif%}
         <h1> This Page is {{post|length}} Posts</h1>
         {%for posts in post%}
-        <h1>{{posts}}</h1>
+        <a href= {% url 'news_detail' posts.id %}><h1>{{posts}}</h1></a>
         <h3>Author: {{posts.author.user}}</3>
         <h3> {{posts.time_post|date:'d M Y T H:i' }}
-        <h4>  - {{posts.text_post|truncatechars:20}}
-            {%if perms.ModalsDateBase.delete_post%}
+        <h4>  - {{posts.text_post|truncatechars:20|currency}}
+            
             {%if posts.author.user == request.user%}
             <a href= {% url 'delete_post' posts.id%}>Delete post</a>
-            {%endif%}
+            
             {%endif%}
             {%if perms.ModalsDateBase.change_post%}
             {%if posts.author.user == request.user%}

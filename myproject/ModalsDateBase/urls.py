@@ -9,4 +9,5 @@ urlpatterns = [
     path('<int:pk>/update', EditPost.as_view(), name='update_post'),
     path('<int:pk>/delete', DeletPost.as_view(),name='delete_post'),
     path('subscriptions/', subscriptions, name='subscriptions'),
+    # path('createAuthor/',save(), name='author_create')
 ]
